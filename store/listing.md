@@ -102,3 +102,19 @@ Capturas nativas do simulador em 22/09/2026, PNG RGBA 576×288, com transparênc
 4. `screenshots-0.2.0/04-leitor-seguinte.png` — continuação do conteúdo.
 
 As capturas 0.1.0 acima permanecem como histórico. Para 0.2.0, usar somente a nova pasta.
+
+
+### Envio da versão 0.2.0 em 22/09/2026
+
+O Even Hub confirmou **In review**, com submissão em 22/09/2026 às 12:26
+(horário exibido pelo portal). O envio inclui o build 0.2.0, as quatro capturas
+transparentes acima, a nova descrição e a atualização de privacidade.
+A versão 0.1.0 permanece **Public / Live** enquanto a atualização aguarda revisão.
+
+O documento do portal foi gerado pelo próprio assistente de privacidade,
+informando a API pública do TabNews e o armazenamento local das preferências.
+`privacy-and-terms-0.2.0.pdf` é uma cópia de referência em inglês dos documentos
+`PRIVACY.md` e `TERMS.md`; não é o PDF gerado pelo portal.
+
+Pacote enviado: `tabnews-0.2.0.ehpk`, SHA-256
+`cb21c0b62cd149a4e4d2235875bb1099855c342c9443352bb66b7a2a95594d40`.

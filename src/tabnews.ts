@@ -1,8 +1,11 @@
 // Acesso à API pública do TabNews e conversão do conteúdo para texto plano.
 
-export type FeedMode = 'relevant' | 'new'
+export type FeedMode = 'newsletter' | 'relevant' | 'new'
+export type FeedPeriod = 'latest' | 'five'
+export const FEED_LABEL: Record<FeedMode, string> = { newsletter: 'Newsletter', relevant: 'Relevantes', new: 'Recentes' }
 
 export interface Post {
+  parent_id?: string | null
   title: string
   owner_username: string
   slug: string
@@ -27,18 +30,45 @@ export function filterLastDays(posts: Post[], now: Date, days: number): Post[] {
   return posts.filter(post => Date.parse(post.published_at) >= cutoff)
 }
 
-export async function loadFeed(mode: FeedMode, fetchJson: FetchJson, now: Date, days = 5): Promise<Post[]> {
+const publicationDay = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit',
+})
+
+export function dayOf(date: string): string {
+  return publicationDay.format(new Date(date))
+}
+
+function latestDay(posts: Post[]): Post[] {
+  if (!posts.length) return []
+  const newest = posts.reduce((a, b) => Date.parse(a.published_at) > Date.parse(b.published_at) ? a : b)
+  const day = dayOf(newest.published_at)
+  return posts.filter(post => dayOf(post.published_at) === day)
+}
+
+export async function loadFeed(
+  mode: FeedMode, fetchJson: FetchJson, now: Date, days = 5,
+  period: FeedPeriod = mode === 'newsletter' ? 'latest' : 'five',
+): Promise<Post[]> {
   const collected: Post[] = []
+  const chronological = mode !== 'relevant'
+  const base = mode === 'newsletter' ? `${API_BASE}/NewsletterOficial` : API_BASE
+  const strategy = mode === 'newsletter' ? 'new' : mode
   for (let page = 1; page <= MAX_PAGES; page += 1) {
-    const url = `${API_BASE}?strategy=${mode}&per_page=${PER_PAGE}&page=${page}`
-    const batch = (await fetchJson(url)) as Post[]
-    const inWindow = filterLastDays(batch, now, days)
+    const response = await fetchJson(`${base}?strategy=${strategy}&per_page=${PER_PAGE}&page=${page}`)
+    if (!Array.isArray(response)) throw new Error('Resposta inválida do TabNews')
+    const batch = (response as Post[]).filter(post =>
+      post && post.parent_id == null && typeof post.title === 'string' && post.title.trim() &&
+      typeof post.slug === 'string' && typeof post.owner_username === 'string' &&
+      Number.isFinite(Date.parse(post.published_at)) && Date.parse(post.published_at) <= now.getTime() &&
+      (mode !== 'newsletter' || post.owner_username === 'NewsletterOficial'),
+    )
+    const inWindow = period === 'latest' ? batch : filterLastDays(batch, now, days)
     collected.push(...inWindow)
-    const pageIsIncomplete = batch.length < PER_PAGE
-    const pageLeftTheWindow = mode === 'new' && inWindow.length < batch.length
-    if (pageIsIncomplete || pageLeftTheWindow) break
+    const crossedDay = period === 'latest' && collected.length > latestDay(collected).length
+    const crossedWindow = period === 'five' && inWindow.length < batch.length
+    if (response.length < PER_PAGE || (chronological && (crossedDay || crossedWindow))) break
   }
-  return collected
+  return period === 'latest' ? latestDay(collected) : collected
 }
 
 export function postUrl(post: Post): string {

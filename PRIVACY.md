@@ -1,6 +1,6 @@
 # Política de Privacidade — TabNews para Even G2
 
-Última atualização: 9 de setembro de 2026.
+Última atualização: 22 de setembro de 2026.
 
 O app **TabNews** para os óculos Even G2 (identificador `com.atzingen.tabnews`) é mantido por Gustavo von Atzingen.
 
@@ -20,7 +20,7 @@ O app não pede microfone, câmera, localização, álbum ou qualquer outra perm
 
 ## Armazenamento
 
-O app não grava dados no celular nem nos óculos além do cache temporário do próprio WebView, que é apagado pelo sistema.
+O app salva somente a fonte de notícias e o período escolhidos no armazenamento local do WebView no celular. Essas preferências permanecem no aparelho e não são enviadas a servidores. O WebView também pode manter seu cache temporário.
 
 ## Terceiros
 
@@ -34,7 +34,7 @@ gustavo.von.atzingen@gmail.com
 
 # Privacy Policy — TabNews for Even G2
 
-Last updated: September 9, 2026.
+Last updated: September 22, 2026.
 
 The **TabNews** app for Even G2 glasses (package `com.atzingen.tabnews`) is maintained by Gustavo von Atzingen.
 
@@ -54,7 +54,7 @@ The app does not request microphone, camera, location, album or any other permis
 
 ## Storage
 
-The app stores nothing on the phone or glasses beyond the WebView's temporary cache, which the system clears.
+The app saves only the selected news source and time period in the phone WebView's local storage. These preferences stay on the device and are not sent to servers. The WebView may also keep its temporary cache.
 
 ## Third parties
 

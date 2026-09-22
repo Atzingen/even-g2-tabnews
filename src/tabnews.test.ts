@@ -132,3 +132,58 @@ describe('readerText', () => {
     expect(readerText(p, 'x')).toBe('T\n\nana · ↑0 · 2 comentários\n\nx')
   })
 })
+
+
+describe('newsletter e período', () => {
+  const official = (extra: Partial<Post> = {}) => post({ owner_username: 'NewsletterOficial', parent_id: null, ...extra })
+
+  test('consulta a conta oficial e mantém só publicações, nunca comentários ou outros autores', async () => {
+    const calls: string[] = []
+    const result = await loadFeed('newsletter', async url => {
+      calls.push(url)
+      return [official(), official({ slug: 'comentario', parent_id: 'parent' }), post(), official({ title: '' })]
+    }, NOW)
+    expect(calls).toEqual(['https://www.tabnews.com.br/api/v1/contents/NewsletterOficial?strategy=new&per_page=100&page=1'])
+    expect(result.map(p => p.slug)).toEqual(['titulo'])
+  })
+
+  test('último dia usa São Paulo, inclusive quando a última publicação tem mais de 5 dias', async () => {
+    const result = await loadFeed('newsletter', async () => [
+      official({ slug: 'a', published_at: '2026-09-01T02:30:00Z' }),
+      official({ slug: 'b', published_at: '2026-08-31T15:00:00Z' }),
+      official({ slug: 'c', published_at: '2026-08-31T02:30:00Z' }),
+    ], NOW, 5, 'latest')
+    expect(result.map(p => p.slug)).toEqual(['a', 'b'])
+  })
+
+  test('busca a próxima página para completar o último dia, sem incluir o anterior', async () => {
+    let calls = 0
+    const result = await loadFeed('newsletter', async () => ++calls === 1
+      ? Array.from({ length: 100 }, (_, i) => official({ slug: String(i) }))
+      : [official({ slug: '100' }), official({ slug: 'old', published_at: '2026-09-07T10:00:00Z' })], NOW)
+    expect(calls).toBe(2)
+    expect(result).toHaveLength(101)
+    expect(result.at(-1)?.slug).toBe('100')
+  })
+
+  test('janela de 5 dias continua disponível para a newsletter', async () => {
+    const result = await loadFeed('newsletter', async () => [official(), official({ slug: 'old', published_at: '2026-08-01T00:00:00Z' })], NOW, 5, 'five')
+    expect(result.map(p => p.slug)).toEqual(['titulo'])
+  })
+
+  test('feed relevante não para cedo ao encontrar uma data antiga', async () => {
+    let calls = 0
+    const result = await loadFeed('relevant', async () => ++calls === 1
+      ? Array.from({ length: 100 }, (_, i) => post({ slug: String(i), published_at: '2026-09-07T12:00:00Z' }))
+      : [post({ slug: 'newest', published_at: '2026-09-09T10:00:00Z' })], NOW, 5, 'latest')
+    expect(calls).toBe(2)
+    expect(result.map(p => p.slug)).toEqual(['newest'])
+  })
+
+  test('vazio continua vazio e falha da newsletter não consulta a comunidade', async () => {
+    expect(await loadFeed('newsletter', async () => [], NOW)).toEqual([])
+    let calls = 0
+    await expect(loadFeed('newsletter', async () => { calls++; throw new Error('HTTP 503') }, NOW)).rejects.toThrow('HTTP 503')
+    expect(calls).toBe(1)
+  })
+})

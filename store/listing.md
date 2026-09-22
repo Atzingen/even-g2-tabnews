@@ -6,35 +6,35 @@ TabNews
 
 ## Descrição curta (uma linha)
 
-**PT:** Os posts mais relevantes e recentes do TabNews dos últimos 5 dias, para ler direto no óculos.
+**PT:** Notícias da newsletter e da comunidade TabNews, com leitura confortável direto no óculos.
 
-**EN:** The most relevant and newest TabNews posts from the last 5 days, readable right on your glasses.
+**EN:** Newsletter and community news from TabNews, with a comfortable reading layout on your glasses.
 
 ## Descrição completa
 
 **PT**
 
-TabNews no seu Even G2. O app mostra os posts publicados nos últimos 5 dias na comunidade TabNews (tabnews.com.br), o fórum brasileiro de programação e tecnologia, e deixa você ler o conteúdo inteiro sem tirar o celular do bolso.
+TabNews no seu Even G2. Abra direto nas notícias da Newsletter do Filipe Deschamps publicadas pela conta NewsletterOficial no TabNews. Explore também as publicações relevantes ou recentes da comunidade brasileira de programação e tecnologia.
 
-- Dois modos: Relevantes (ranking do próprio TabNews) e Recentes. Um toque alterna.
-- Lista com cursor: swipe para cima ou para baixo percorre os títulos, o cabeçalho mostra autor, tabcoins e número de comentários do item selecionado.
-- Leitor paginado: um toque abre o post e avança página a página; swipe volta; duplo toque retorna à lista na mesma posição.
-- Atualiza sozinho a cada 30 minutos enquanto está aberto.
-- Sem conta, sem cadastro, sem rastreamento. O app só lê a API pública do TabNews.
+- Três títulos por página, com espaço entre notícias e cabeçalho com fonte, data e posição.
+- Escolha fonte e período no celular: último dia disponível ou últimos 5 dias. O app lembra sua preferência no aparelho.
+- Swipe seleciona; toque abre o conteúdo completo e avança as páginas; duplo toque no leitor volta à lista.
+- Atualiza a cada 30 minutos enquanto a lista está aberta.
+- Sem conta, cadastro ou rastreamento. Acesso direto à API pública do TabNews.
 
-Feito para leitura rápida: títulos completos em até duas linhas, texto do post convertido para o formato do display, nada de imagens ou links quebrados.
+A fonte Newsletter mostra as publicações da conta oficial no TabNews; não reproduz necessariamente uma edição inteira do e-mail. Conteúdo em português do Brasil. App independente, sem afiliação ao TabNews ou à newsletter.
 
 **EN**
 
-TabNews on your Even G2. The app lists the posts published in the last 5 days on TabNews (tabnews.com.br), the Brazilian programming and technology community, and lets you read the full text without taking your phone out.
+TabNews on your Even G2. Open directly into news from Filipe Deschamps' newsletter, published by the NewsletterOficial account on TabNews. You can also explore relevant or newest posts from the Brazilian programming and technology community.
 
-- Two modes: Relevant (TabNews' own ranking) and Newest. One tap switches.
-- Cursor list: swipe up or down to move through titles; the header shows the selected post's author, tabcoins and comment count.
-- Paged reader: tap opens the post and turns pages; swipe up goes back; double tap returns to the list at the same position.
-- Refreshes every 30 minutes while open.
-- No account, no sign-up, no tracking. The app only reads TabNews' public API.
+- Three headlines per page, with clear spacing and a header showing source, date and position.
+- Choose your source and period on your phone: latest available publication day or last five days. Preferences are remembered on your device.
+- Swipe to select; tap to read the full post and turn pages; double tap in the reader to return to the list.
+- Refreshes every 30 minutes while the list is open.
+- No account, sign-up or tracking. Direct access to the public TabNews API.
 
-Content is in Portuguese (Brazil).
+The Newsletter source shows the official account's TabNews posts, not necessarily a complete email edition. Content is in Brazilian Portuguese. Independent app, not affiliated with TabNews or the newsletter.
 
 ## Como usar (texto de primeira execução / ajuda)
 
@@ -50,6 +50,12 @@ Swipe: move cursor · Tap: open · Double tap: back or exit
 **PT:** O app TabNews para Even G2 não coleta, armazena nem transmite dados pessoais. A única conexão de rede é com a API pública do TabNews (https://www.tabnews.com.br), para baixar títulos e textos de posts. Nenhuma informação sobre o usuário, o aparelho ou o uso do app é enviada a qualquer servidor. O app não usa cookies, analytics ou identificadores.
 
 **EN:** The TabNews app for Even G2 does not collect, store or transmit any personal data. Its only network connection is to the public TabNews API (https://www.tabnews.com.br), used to download post titles and bodies. No information about the user, the device or app usage is sent to any server. The app uses no cookies, analytics or identifiers.
+
+## Release notes 0.2.0
+
+**PT:** Newsletter oficial como fonte padrão. Três títulos separados por página. Fonte e período configuráveis no celular, com preferência salva. Cabeçalho simplificado com data e posição.
+
+**EN:** Official newsletter posts are now the default source. Three clearly separated headlines per page. Choose and remember your source and time period on your phone. Simplified header with date and position.
 
 ## Release notes 0.1.0 (1–3 linhas por idioma)
 
@@ -85,3 +91,14 @@ capturas RGBA acima. A prévia foi conferida com o texto sobre a foto de
 ambiente, sem retângulo preto. A versão existente `0.1.0` foi reenviada e o
 portal confirmou **In Review**. A aprovação e a publicação ainda dependem
 da revisão do Even Hub.
+
+## Screenshots da versão 0.2.0
+
+Capturas nativas do simulador em 22/09/2026, PNG RGBA 576×288, com transparência:
+
+1. `screenshots-0.2.0/01-newsletter.png` — primeira página, três títulos separados.
+2. `screenshots-0.2.0/02-selecao.png` — segunda página, mantendo a separação entre títulos.
+3. `screenshots-0.2.0/03-leitor.png` — título completo e metadados no leitor.
+4. `screenshots-0.2.0/04-leitor-seguinte.png` — continuação do conteúdo.
+
+As capturas 0.1.0 acima permanecem como histórico. Para 0.2.0, usar somente a nova pasta.
